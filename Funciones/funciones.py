@@ -1,3 +1,4 @@
+from random import shuffle
 
 def permutacion_aleatoria(n):
     '''
@@ -5,7 +6,10 @@ def permutacion_aleatoria(n):
     :param n:
     :return:
     '''
-    return []
+    
+    x = [i for i in range(0,n)]
+    shuffle(x)
+    return x
 
 def f(puntos,x):
     '''
