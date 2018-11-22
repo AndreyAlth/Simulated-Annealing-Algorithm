@@ -12,8 +12,42 @@ def animacion(puntos, soluciones):
     :param soluciones: Lista de soluciones a modificar
     :return: None
     '''
-    return None
+    
+    line = turtle.Turtle()
+    time.sleep(3) #El programa se detiene por tres segundos
 
+    line.color("gray")
+    line.pensize(2)#tamano de la linea en pixeles
+
+    #Cargamos la permutacion en otra lista
+    coordenadas = []
+    for indice in soluciones:
+        coordenadas.append(puntos[indice])
+
+    #parte que dibuja los puntos
+    for i in coordenadas:
+        punto = i
+        print(punto)
+        x = punto[0]
+        y = punto[1]
+        line.penup()
+        line.goto(x,y)
+        line.dot("black")
+
+    #parte que dibuja la linea
+    line.down()
+    for i in coordenadas:
+        punto = i
+        print(punto)
+        x = punto[0]
+        y = punto[1]
+        line.goto(x,y)
+
+
+    #el program se detien por tres segundos
+    time.sleep(2)
+    
+    return None
 
 def obtenerPuntos(archivo):
     '''
