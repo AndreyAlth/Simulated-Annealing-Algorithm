@@ -1,8 +1,5 @@
 #Calcular el valor de la solución actual
 
-archivo = open("puntos.txt", "r")
-puntos = archivo.read()
-
 def f(puntos,x):
     parejas = x
     for i in range(parejas):
