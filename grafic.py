@@ -5,24 +5,23 @@ import turtle
 from turtle import *
 import time
 from progress.bar import Bar
-iteraciones = 50000
+iteraciones = 100000
 bar = Bar('Procesandoooo', max=iteraciones)
-cities = obtenerPuntos('puntos.txt')
-n = len(cities)
-tour = random.sample(range(n),n);
-print(tour)
-bestcost= 0
+ct = obtenerPuntos('puntos.txt')
+n = len(ct)
+tr = random.sample(range(n),n);
+bt= 0
 
 for i in range(n-1):
-    bestcost += ((cities[tour[i]][0]-cities[tour[i+1]][0])**2+(cities[tour[i]][1]-cities[tour[i+1]][1])**2)**0.5
+    bt += ((ct[tr[i]][0]-ct[tr[i+1]][0])**2+(ct[tr[i]][1]-ct[tr[i+1]][1])**2)**0.5
 
-def newC(p, l, k):
-    newc = 0
+def nC(p, l, k):
+    nc = 0
     for i in range(k-1):
-        newc += ((p[l[i]][0]-p[l[i+1]][0])**2+(p[l[i]][1]-p[l[i+1]][1])**2)**0.5
-    return newc
+        nc += ((p[l[i]][0]-p[l[i+1]][0])**2+(p[l[i]][1]-p[l[i+1]][1])**2)**0.5
+    return nc
 
-def newT(k, d):
+def nT(k, d):
     l = list(d)
     [i,j] = sorted(random.sample(range(k),2));
     nt =  l[:i] + l[j:j+1] +  l[i+1:j] + l[i:i+1] + l[j+1:]
@@ -39,12 +38,13 @@ def aceptacion(bc, nc, tr, ntr, tp):
 
 for temperature in numpy.logspace(0,5,num=iteraciones)[::-1]:
     bar.next()
-    newtour = newT(n, tour)
-    newcost = newC(cities, newtour, n)
-    tour, bestcost = aceptacion(bestcost, newcost, tour, newtour, temperature)
-print(bestcost)
-print(cities)
-plt.plot([cities[tour[i % n]][0] for i in range(n+1)], [cities[tour[i % n]][1] for i in range(n+1)], 'xb-');
+    nt = nT(n, tr)
+    nc = nC(ct, nt, n)
+    tr, bt = aceptacion(bt, nc, tr, nt, temperature)
+
+print(" ")
+print(bt)
+plt.plot([ct[tr[i % n]][0] for i in range(n+1)], [ct[tr[i % n]][1] for i in range(n+1)], 'xb-');
 plt.show()
 screensize(800, 800)
 t = Turtle()
@@ -52,8 +52,8 @@ t.hideturtle()
 t.speed(15)
 t.pensize(7)
 t.penup()
-for p in tour:
-    dx, dy = cities[p]
+for p in tr:
+    dx, dy = ct[p]
     t.goto(dx, dy)
     t.pendown()
     t.dot('red')
@@ -64,10 +64,10 @@ t.penup()
 t.speed(5)
 t.pensize(4)
 t.color('green')
-for p in tour:
-    dx, dy = cities[p]
+for p in tr:
+    dx, dy = ct[p]
     t.goto(dx, dy)
     t.pendown()
-dx, dy = cities[tour[0]]
+dx, dy = ct[tr[0]]
 t.goto(dx, dy)
 time.sleep(5)
