@@ -1,6 +1,5 @@
-
 from Funciones.funciones import *
-
+from progress.bar import Bar
 
 def enfriamiento_simulado(puntos, iteraciones, t_ini, t_fin, n):
     '''
@@ -13,6 +12,7 @@ def enfriamiento_simulado(puntos, iteraciones, t_ini, t_fin, n):
     :param n: Numero de ciudades
     :return: Regresa en un arreglo, la permutacion inicial, y la permutacion final
     '''
+    bar = Bar('Procesandoooo', max=iteraciones)
     solucion = []
     x = permutacion_aleatoria(n)
     solucion.append(x)
@@ -22,21 +22,19 @@ def enfriamiento_simulado(puntos, iteraciones, t_ini, t_fin, n):
     print("datos iniciales")
     print("temp ", temp)
     print("distancia ", f_x)
-    print("solucion ", solucion[0])
+    print("solucion primera ", solucion[0])
     for i in range(iteraciones):
+        bar.next()
         x_ = modifica(x,n)
         f_x_ = f(puntos,x_)
-        if(f_x_<f_x):
-            valormenor = f_x_
         if cambio(f_x, f_x_, temp):
             x = x_
             f_x = f_x_
-        temp = actualiza_temp(t_ini,i,iteraciones)
+        temp = actualiza_temp(t_ini,t_fin,i,iteraciones)
 
     solucion.append(x)
     print("datos finales")
     print("temp ", temp)
-    print("distancia menor de todas fue ", valormenor)
     print("distancia final fue ", f_x)
-    print("solucion ", solucion[1])
+    print("solucion final ", solucion[1])
     return solucion

@@ -4,6 +4,9 @@ from random import shuffle, randint, uniform
 import turtle
 from turtle import *
 import time
+from progress.bar import Bar
+iteraciones = 50000
+bar = Bar('Procesandoooo', max=iteraciones)
 cities = obtenerPuntos('puntos.txt')
 n = len(cities)
 tour = random.sample(range(n),n);
@@ -34,7 +37,8 @@ def aceptacion(bc, nc, tr, ntr, tp):
         bc = nc
     return tr, bc
 
-for temperature in numpy.logspace(0,5,num=10000)[::-1]:
+for temperature in numpy.logspace(0,5,num=iteraciones)[::-1]:
+    bar.next()
     newtour = newT(n, tour)
     newcost = newC(cities, newtour, n)
     tour, bestcost = aceptacion(bestcost, newcost, tour, newtour, temperature)

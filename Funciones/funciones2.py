@@ -1,6 +1,7 @@
-from random import shuffle, random, sample
-from math import exp
-from numpy import geomspace
+from random import shuffle, randint, uniform
+import random
+import numpy
+import math
 
 def permutacion_aleatoria(n):
     '''
@@ -32,7 +33,7 @@ def modifica(x,n):
     :return:
     '''
     n_orden = list(x)
-    [i,j] = sorted(sample(range(n),2));
+    [i,j] = sorted(random.sample(range(n),2));
     n_orden =  n_orden[:i] + n_orden[j:j+1] +  n_orden[i+1:j] + n_orden[i:i+1] + n_orden[j+1:]
     return n_orden
 
@@ -45,15 +46,15 @@ def cambio(f_x, f_x_, temp):
     :param temp: Temperatura actual
     :return: Verdadero si se cambia, Falso si no
     '''
-    d = (f_x)-(f_x_) #si esto es positivo p siempre sera > 1
-    radd = random()
-    p = exp( d / temp)
-    if p > radd:
+    d = f_x_-f_x
+    if d<=0:
+        return True
+    elif (math.exp(-d/(((38054*10)**-3)*temp)) > random.random()):
         return True
     else:
         return False
 
-def actualiza_temp(t_ini,t_fin,i,iter):
+def actualiza_temp(t_ini,i,it):
     '''
     Actualiza la temperatura
     :param t_ini: Temp inicial
@@ -61,6 +62,9 @@ def actualiza_temp(t_ini,t_fin,i,iter):
     :param i: iteracion actual
     :return: Nueva temperatura
     '''
-    k = (i+1)*(-1)
-    N_temperatura = geomspace(t_fin,t_ini,iter)[k] #va alrevez
+    #k = i*(-1)
+    #N_temperatura = numpy.logspace(0,5,num=50000)[k]
+    N_temperatura = (t_ini/it)*(it-i)
+
+    print(N_temperatura)
     return N_temperatura
